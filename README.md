@@ -8,3 +8,4 @@ Installation
 
 Import dayz.sql to your database.
 Edit config.php to set right values. That is highly important!
+Default login: admin/123456
