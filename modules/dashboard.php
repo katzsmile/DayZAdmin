@@ -22,7 +22,7 @@ $quicklinks = XML2Array::createArray($xml);
 // Define your servers,
 // see list.php for all supported games and identifiers.
 $servers = array(
-    'server 1' => array('armedassault2', '79.174.32.203')
+    'server 1' => array('armedassault2', $serverip)
 );
 
 
