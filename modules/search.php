@@ -43,17 +43,8 @@ if (isset($_SESSION['user_id']))
 			
 			switch ($_POST['type']) {
 				case 'player':
-					?>
-					<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
-					<tr>
-						<th class="table-header-repeat line-left" width="5%"><a href="">Status</a></th>
-						<th class="table-header-repeat line-left" width="13%"><a href="">Player Name</a></th>
-						<th class="table-header-repeat line-left" width="7%"><a href="">Player UID</a></th>
-						<th class="table-header-repeat line-left" width="10%"><a href="">Position</a></th>
-						<th class="table-header-repeat line-left" width="22%"><a href="">Inventory preview</a></th>
-						<th class="table-header-repeat line-left" width="22%"><a href="">Backpack preview</a></th>
-					</tr>
-					<?
+					$tableheader = header_player(0);
+					echo $tableheader;
 					$playerquery = "SELECT * FROM main WHERE name LIKE '%". str_replace(" ", "%' OR name LIKE '%", $good). "%' ORDER BY lastupdate DESC"; 
 					$result = mysql_query($playerquery) or die(mysql_error());
 					$tablerows = "";
@@ -63,17 +54,8 @@ if (isset($_SESSION['user_id']))
 					echo $tablerows;
 				break;
 				case 'item':
-					?>
-					<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
-					<tr>
-						<th class="table-header-repeat line-left" width="5%"><a href="">Status</a></th>
-						<th class="table-header-repeat line-left" width="13%"><a href="">Player Name</a></th>
-						<th class="table-header-repeat line-left" width="7%"><a href="">Player UID</a></th>
-						<th class="table-header-repeat line-left" width="10%"><a href="">Position</a></th>
-						<th class="table-header-repeat line-left" width="22%"><a href="">Inventory</a></th>
-						<th class="table-header-repeat line-left" width="22%"><a href="">Backpack</a></th>
-					</tr>
-					<?
+					$tableheader = header_player(0);
+					echo $tableheader;
 					$query = "SELECT * FROM main WHERE inventory LIKE '%". str_replace(" ", "%' OR backpack LIKE '%", $good). "%'"." ORDER BY lastupdate DESC";
 					$result = mysql_query($query) or die(mysql_error());
 					$tablerows = "";
@@ -83,18 +65,9 @@ if (isset($_SESSION['user_id']))
 					echo $tablerows;
 					break;
 				case 'vehicle':
-					?>
-					<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
-					<tr>
-						<th class="table-header-repeat line-left" width="5%"><a href="">ID</a></th>
-						<th class="table-header-repeat line-left" width="13%"><a href="">Classname</a>	</th>
-						<th class="table-header-repeat line-left" width="7%"><a href="">Object UID</a></th>
-						<th class="table-header-repeat line-left" width="5%"><a href="">Damage</a></th>
-						<th class="table-header-repeat line-left" width="10%"><a href="">Position</a></th>
-						<th class="table-header-repeat line-left" width="22%"><a href="">Inventory</a></th>
-						<th class="table-header-repeat line-left" width="22%"><a href="">Hitpoints</a></th>
-					</tr>
-					<?
+					$chbox = "";
+					$tableheader = header_vehicle(0, $chbox);
+					echo $tableheader;
 					$query = "SELECT * FROM objects WHERE otype LIKE '%". str_replace(" ", "%' OR otype LIKE '%", $good). "%'";
 					$res = mysql_query($query) or die(mysql_error());
 					$chbox = "";
@@ -104,18 +77,9 @@ if (isset($_SESSION['user_id']))
 					echo $tablerows;
 					break;
 				case 'container':
-					?>
-					<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
-					<tr>
-						<th class="table-header-repeat line-left" width="5%"><a href="">ID</a></th>
-						<th class="table-header-repeat line-left" width="13%"><a href="">Classname</a>	</th>
-						<th class="table-header-repeat line-left" width="7%"><a href="">Object UID</a></th>
-						<th class="table-header-repeat line-left" width="5%"><a href="">Damage</a></th>
-						<th class="table-header-repeat line-left" width="10%"><a href="">Position</a></th>
-						<th class="table-header-repeat line-left" width="22%"><a href="">Inventory</a></th>
-						<th class="table-header-repeat line-left" width="22%"><a href="">Hitpoints</a></th>
-					</tr>
-					<?
+					$chbox = "";
+					$tableheader = header_vehicle(0, $chbox);
+					echo $tableheader;
 					$query = "SELECT * FROM objects WHERE inventory LIKE '%". str_replace(" ", "%' OR inventory LIKE '%", $good). "%'";
 					$chbox = "";
 					while ($row=mysql_fetch_array($res)) {
@@ -124,17 +88,8 @@ if (isset($_SESSION['user_id']))
 					echo $tablerows;
 					break;
 				default:
-					?>
-					<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
-					<tr>
-						<th class="table-header-repeat line-left" width="5%"><a href="">Status</a></th>
-						<th class="table-header-repeat line-left" width="13%"><a href="">Player Name</a></th>
-						<th class="table-header-repeat line-left" width="7%"><a href="">Player UID</a></th>
-						<th class="table-header-repeat line-left" width="10%"><a href="">Position</a></th>
-						<th class="table-header-repeat line-left" width="22%"><a href="">Inventory preview</a></th>
-						<th class="table-header-repeat line-left" width="22%"><a href="">Backpack preview</a></th>
-					</tr>
-					<?
+					$tableheader = header_player(0);
+					echo $tableheader;
 					$playerquery = "SELECT * FROM main WHERE name LIKE '%". str_replace(" ", "%' OR name LIKE '%", $good). "%' ORDER BY lastupdate DESC"; 
 					$result = mysql_query($playerquery) or die(mysql_error());
 					$tablerows = "";
