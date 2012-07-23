@@ -40,7 +40,9 @@ if (isset($_SESSION['user_id']))
 			$good = preg_replace("[ +]", " ", $good);
 			$logic = "OR";		
 			
-			
+			?>
+			<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
+			<?
 			switch ($_POST['type']) {
 				case 'player':
 					$tableheader = header_player(0);
