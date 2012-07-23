@@ -249,20 +249,24 @@ while ($row=mysql_fetch_array($res)) {
 								$maxmagazines = $items_xml['items']['s'.$Backpack[0]]['maxmagazines'];
 							}
 							
-							$bpweaponscount = count($Backpack[1][0]);
 							$bpweapons = array();
-							for ($m=0; $m<$bpweaponscount; $m++){
-									for ($mi=0; $mi<$Backpack[1][1][$m]; $mi++){
-										$bpweapons[] = $Backpack[1][0][$m];
-									}
-							}							
+							if(array_key_exists(0, $Backpack[1])){
+								$bpweaponscount = count($Backpack[1][0]);							
+								for ($m=0; $m<$bpweaponscount; $m++){
+										for ($mi=0; $mi<$Backpack[1][1][$m]; $mi++){
+											$bpweapons[] = $Backpack[1][0][$m];
+										}
+								}
+							}
 
 							
-							$bpitemscount = count($Backpack[2][0]);
 							$bpitems = array();
-							for ($m=0; $m<$bpitemscount; $m++){
-								for ($mi=0; $mi<$Backpack[2][1][$m]; $mi++){
-									$bpitems[] = $Backpack[2][0][$m];
+							if(array_key_exists(0, $Backpack[2])){
+								$bpitemscount = count($Backpack[2][0]);							
+								for ($m=0; $m<$bpitemscount; $m++){
+									for ($mi=0; $mi<$Backpack[2][1][$m]; $mi++){
+										$bpitems[] = $Backpack[2][0][$m];
+									}
 								}
 							}
 							
