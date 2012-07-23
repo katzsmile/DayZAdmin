@@ -50,7 +50,7 @@ while ($row=mysql_fetch_array($res)) {
 ?>	
 	<div id="page-heading">
 		<h1><? echo "<title>".$row['otype']." - ".$sitename."</title>"; ?></h1>
-		<h1><? echo $row['otype']; ?> - <? echo $row['id']; ?></h1>
+		<h1><? echo $row['otype']; ?> - <? echo $row['id']; ?> - Last save: <? echo $row['lastupdate']; ?></h1>
 	</div>
 	<!-- end page-heading -->
 

@@ -46,152 +46,102 @@ if (isset($_SESSION['user_id']))
 					?>
 					<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 					<tr>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Player Name</a>	</th>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Player ID</a></th>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Character ID</a></th>
-						<th class="table-header-repeat line-left"><a href="">Alive</a></th>
-						<th class="table-header-repeat line-left"><a href="">Position</a></th>
-						<th class="table-header-repeat line-left"><a href="">Inventory</a></th>
-						<th class="table-header-repeat line-left"><a href="">Backpack</a></th>
+						<th class="table-header-repeat line-left" width="5%"><a href="">Status</a></th>
+						<th class="table-header-repeat line-left" width="13%"><a href="">Player Name</a></th>
+						<th class="table-header-repeat line-left" width="7%"><a href="">Player UID</a></th>
+						<th class="table-header-repeat line-left" width="10%"><a href="">Position</a></th>
+						<th class="table-header-repeat line-left" width="22%"><a href="">Inventory preview</a></th>
+						<th class="table-header-repeat line-left" width="22%"><a href="">Backpack preview</a></th>
 					</tr>
 					<?
 					$playerquery = "SELECT * FROM main WHERE name LIKE '%". str_replace(" ", "%' OR name LIKE '%", $good). "%' ORDER BY lastupdate DESC"; 
 					$result = mysql_query($playerquery) or die(mysql_error());
-					while ($player=mysql_fetch_array($result)) {
-						$Worldspace = str_replace("[", "", $player['pos']);
-						$Worldspace = str_replace("]", "", $Worldspace);
-						$Worldspace = str_replace("|", ",", $Worldspace);
-						$Worldspace = explode(",", $Worldspace);
-						echo "<tr>
-						<td><a href=\"index.php?view=info&show=1&id=".$player['uid']."&cid=".$player['id']."\">".$player['name']."</a></td>
-						<td><a href=\"index.php?view=info&show=1&id=".$player['uid']."&cid=".$player['id']."\">".$player['uid']."</a></td>
-						<td><a href=\"index.php?view=info&show=1&id=".$player['uid']."&cid=".$player['id']."\">".$player['id']."</a></td>
-						<td>".($player['death'] ? "No" : "Yes")."</td>
-						<td>left:".round(($Worldspace[1]/100))." top:".round((154-($Worldspace[2]/100)))."</td>
-						<td>".substr($player['inventory'], 0, 50) . "...</td>
-						<td>".substr($player['backpack'], 0, 50) . "...</td>
-						</tr>";
-					}					
+					$tablerows = "";
+					while ($row=mysql_fetch_array($result)) {
+						$tablerows .= row_player($row);
+					}
+					echo $tablerows;
 				break;
 				case 'item':
 					?>
 					<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 					<tr>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Player Name</a>	</th>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Player ID</a></th>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Character ID</a></th>
-						<th class="table-header-repeat line-left"><a href="">Alive</a></th>
-						<th class="table-header-repeat line-left"><a href="">Position</a></th>
-						<th class="table-header-repeat line-left"><a href="">Inventory</a></th>
-						<th class="table-header-repeat line-left"><a href="">Backpack</a></th>
+						<th class="table-header-repeat line-left" width="5%"><a href="">Status</a></th>
+						<th class="table-header-repeat line-left" width="13%"><a href="">Player Name</a></th>
+						<th class="table-header-repeat line-left" width="7%"><a href="">Player UID</a></th>
+						<th class="table-header-repeat line-left" width="10%"><a href="">Position</a></th>
+						<th class="table-header-repeat line-left" width="22%"><a href="">Inventory</a></th>
+						<th class="table-header-repeat line-left" width="22%"><a href="">Backpack</a></th>
 					</tr>
 					<?
 					$query = "SELECT * FROM main WHERE inventory LIKE '%". str_replace(" ", "%' OR backpack LIKE '%", $good). "%'"." ORDER BY lastupdate DESC";
-					$res = mysql_query($query) or die(mysql_error());
-					while ($row=mysql_fetch_array($res)) {
-						$Worldspace = str_replace("[", "", $row['pos']);
-						$Worldspace = str_replace("]", "", $Worldspace);
-						$Worldspace = str_replace("|", ",", $Worldspace);
-						$Worldspace = explode(",", $Worldspace);
-						echo "<tr>
-						<td><a href=\"index.php?view=info&show=1&id=".$row['uid']."&cid=".$row['id']."\">".$row['name']."</a></td>
-						<td><a href=\"index.php?view=info&show=1&id=".$row['uid']."&cid=".$row['id']."\">".$row['uid']."</a></td>
-						<td><a href=\"index.php?view=info&show=1&id=".$row['uid']."&cid=".$row['id']."\">".$row['id']."</a></td>
-						<td>".($row['death'] ? "No" : "Yes")."</td>
-						<td>left:".round(($Worldspace[1]/100))." top:".round((154-($Worldspace[2]/100)))."</td>
-						<td>".substr($row['inventory'], 0, 50) . "...</td>
-						<td>".substr($row['backpack'], 0, 50) . "...</td>
-						</tr>";
+					$result = mysql_query($query) or die(mysql_error());
+					$tablerows = "";
+					while ($row=mysql_fetch_array($result)) {
+						$tablerows .= row_player($row);
 					}
+					echo $tablerows;
 					break;
 				case 'vehicle':
 					?>
 					<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 					<tr>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Classname</a>	</th>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Object UID</a></th>
-						<th class="table-header-repeat line-left"><a href="">Damage</a></th>
-						<th class="table-header-repeat line-left"><a href="">Position</a></th>
-						<th class="table-header-repeat line-left"><a href="">Inventory</a></th>
-						<th class="table-header-repeat line-left"><a href="">Hitpoints</a></th>
+						<th class="table-header-repeat line-left" width="5%"><a href="">ID</a></th>
+						<th class="table-header-repeat line-left" width="13%"><a href="">Classname</a>	</th>
+						<th class="table-header-repeat line-left" width="7%"><a href="">Object UID</a></th>
+						<th class="table-header-repeat line-left" width="5%"><a href="">Damage</a></th>
+						<th class="table-header-repeat line-left" width="10%"><a href="">Position</a></th>
+						<th class="table-header-repeat line-left" width="22%"><a href="">Inventory</a></th>
+						<th class="table-header-repeat line-left" width="22%"><a href="">Hitpoints</a></th>
 					</tr>
 					<?
 					$query = "SELECT * FROM objects WHERE otype LIKE '%". str_replace(" ", "%' OR otype LIKE '%", $good). "%'";
 					$res = mysql_query($query) or die(mysql_error());
+					$chbox = "";
 					while ($row=mysql_fetch_array($res)) {
-							$Worldspace = str_replace("[", "", $row['pos']);
-							$Worldspace = str_replace("]", "", $Worldspace);
-							$Worldspace = str_replace("|", ",", $Worldspace);
-							$Worldspace = explode(",", $Worldspace);
-							echo "<tr>
-							<td><a href=\"index.php?view=info&show=4&id=".$row['id']."\">".$row['otype']."</a></td>
-							<td><a href=\"index.php?view=info&show=4&id=".$row['id']."\">".$row['id']."</a></td>
-							<td>".$row['damage']."</td>
-							<td>left:".round(($Worldspace[1]/100))." top:".round((154-($Worldspace[2]/100)))."</td>							
-							<td>".substr($row['inventory'], 0, 50) . "...</td>
-							<td>".substr($row['hitpoints'], 0, 50) . "...</td>
-							</tr>";
+							$tablerows .= row_vehicle($row, $chbox);
 					}
+					echo $tablerows;
 					break;
 				case 'container':
 					?>
 					<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 					<tr>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Classname</a>	</th>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Object UID</a></th>
-						<th class="table-header-repeat line-left"><a href="">Damage</a></th>
-						<th class="table-header-repeat line-left"><a href="">Position</a></th>
-						<th class="table-header-repeat line-left"><a href="">Inventory</a></th>
-						<th class="table-header-repeat line-left"><a href="">Hitpoints</a></th>
+						<th class="table-header-repeat line-left" width="5%"><a href="">ID</a></th>
+						<th class="table-header-repeat line-left" width="13%"><a href="">Classname</a>	</th>
+						<th class="table-header-repeat line-left" width="7%"><a href="">Object UID</a></th>
+						<th class="table-header-repeat line-left" width="5%"><a href="">Damage</a></th>
+						<th class="table-header-repeat line-left" width="10%"><a href="">Position</a></th>
+						<th class="table-header-repeat line-left" width="22%"><a href="">Inventory</a></th>
+						<th class="table-header-repeat line-left" width="22%"><a href="">Hitpoints</a></th>
 					</tr>
 					<?
 					$query = "SELECT * FROM objects WHERE inventory LIKE '%". str_replace(" ", "%' OR inventory LIKE '%", $good). "%'";
-					$res = mysql_query($query) or die(mysql_error());
+					$chbox = "";
 					while ($row=mysql_fetch_array($res)) {
-							$Worldspace = str_replace("[", "", $row['pos']);
-							$Worldspace = str_replace("]", "", $Worldspace);
-							$Worldspace = str_replace("|", ",", $Worldspace);
-							$Worldspace = explode(",", $Worldspace);
-							echo "<tr>
-							<td><a href=\"index.php?view=info&show=4&id=".$row['id']."\">".$row['otype']."</a></td>
-							<td><a href=\"index.php?view=info&show=4&id=".$row['id']."\">".$row['id']."</a></td>
-							<td>".$row['damage']."</td>
-							<td>left:".round(($Worldspace[1]/100))." top:".round((154-($Worldspace[2]/100)))."</td>							
-							<td>".substr($row['inventory'], 0, 50) . "...</td>
-							<td>".substr($row['hitpoints'], 0, 50) . "...</td>
-							</tr>";
+							$tablerows .= row_vehicle($row, $chbox);
 					}
+					echo $tablerows;
 					break;
 				default:
 					?>
 					<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 					<tr>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Player Name</a>	</th>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Player ID</a></th>
-						<th class="table-header-repeat line-left minwidth-1"><a href="">Character ID</a></th>
-						<th class="table-header-repeat line-left"><a href="">Alive</a></th>
-						<th class="table-header-repeat line-left"><a href="">Position</a></th>
-						<th class="table-header-repeat line-left"><a href="">Inventory</a></th>
-						<th class="table-header-repeat line-left"><a href="">Backpack</a></th>
+						<th class="table-header-repeat line-left" width="5%"><a href="">Status</a></th>
+						<th class="table-header-repeat line-left" width="13%"><a href="">Player Name</a></th>
+						<th class="table-header-repeat line-left" width="7%"><a href="">Player UID</a></th>
+						<th class="table-header-repeat line-left" width="10%"><a href="">Position</a></th>
+						<th class="table-header-repeat line-left" width="22%"><a href="">Inventory preview</a></th>
+						<th class="table-header-repeat line-left" width="22%"><a href="">Backpack preview</a></th>
 					</tr>
 					<?
 					$playerquery = "SELECT * FROM main WHERE name LIKE '%". str_replace(" ", "%' OR name LIKE '%", $good). "%' ORDER BY lastupdate DESC"; 
 					$result = mysql_query($playerquery) or die(mysql_error());
-					while ($player=mysql_fetch_array($result)) {
-						$Worldspace = str_replace("[", "", $player['pos']);
-						$Worldspace = str_replace("]", "", $Worldspace);
-						$Worldspace = str_replace("|", ",", $Worldspace);
-						$Worldspace = explode(",", $Worldspace);
-						echo "<tr>
-						<td><a href=\"index.php?view=info&show=1&id=".$player['uid']."&cid=".$player['id']."\">".$player['name']."</a></td>
-						<td><a href=\"index.php?view=info&show=1&id=".$player['uid']."&cid=".$player['id']."\">".$player['uid']."</a></td>
-						<td><a href=\"index.php?view=info&show=1&id=".$player['uid']."&cid=".$player['id']."\">".$player['id']."</a></td>
-						<td>".($player['death'] ? "No" : "Yes")."</td>
-						<td>left:".round(($Worldspace[1]/100))." top:".round((154-($Worldspace[2]/100)))."</td>
-						<td>".substr($player['inventory'], 0, 50) . "...</td>
-						<td>".substr($player['backpack'], 0, 50) . "...</td>
-						</tr>";
+					$tablerows = "";
+					while ($row=mysql_fetch_array($result)) {
+						$tablerows .= row_player($row);
 					}
+					echo $tablerows;
 				};
 			?>
 			</table>

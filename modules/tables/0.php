@@ -1,21 +1,12 @@
 <?
 	//ini_set( "display_errors", 0);
-	//error_reporting (E_ALL ^ E_NOTICE);
+	//error_reporting (E_ALL ^ E_NOTICE);		<th class="table-header-repeat line-left" width="15%"><a href="">IP Address</a></th>
+		//<th class="table-header-repeat line-left" width="5%"><a href="">Ping</a></th>
 
 	$cmd = "Players";
 	
 	$answer = rcon($serverip,$serverport,$rconpassword,$cmd);
-	$tableheader = '
-		<tr>
-		<th class="table-header-repeat line-left" width="5%"><a href="">Status</a></th>
-		<th class="table-header-repeat line-left" width="13%"><a href="">Player Name</a></th>
-		<th class="table-header-repeat line-left" width="7%"><a href="">Player ID</a></th>
-		<th class="table-header-repeat line-left" width="15%"><a href="">IP Address</a></th>
-		<th class="table-header-repeat line-left" width="5%"><a href="">Ping</a></th>
-		<th class="table-header-repeat line-left" width="10%"><a href="">Position</a></th>
-		<th class="table-header-repeat line-left" width="22%"><a href="">Inventory</a></th>
-		<th class="table-header-repeat line-left" width="22%"><a href="">Backpack</a></th>
-		</tr>';
+	$tableheader = header_player(0);
 		
 	
 	if ($answer != ""){
@@ -50,11 +41,6 @@
 				}
 			}
 		}
-		/* for ($i=0; $i<count($players); $i++){
-		for ($j=0; $j<count($players[$i]); $j++){
-				echo $players[$i][$j]."  --  ".$j."<br /><br />";
-		}
-		} */
 		
 		$pnumber = count($players);
 		//echo count($players)."<br />";
@@ -89,40 +75,16 @@
 				$dead = "";
 				$x = 0;
 				$y = 0;
-				$inventory = "";
-				$backpack = "";
+				$InventoryPreview = "";
+				$BackpackPreview = "";
 				$ip = $players[$i][1];
 				$ping = $players[$i][2];
 				$name = $players[$i][4];
 				$uid = "";
 				
-				while ($row=mysql_fetch_array($res)) {
-					$Worldspace = str_replace("[", "", $row['pos']);
-					$Worldspace = str_replace("]", "", $Worldspace);
-					$Worldspace = explode("|", $Worldspace);					
-					if(array_key_exists(2,$Worldspace)){$x = $Worldspace[2];}
-					if(array_key_exists(1,$Worldspace)){$y = $Worldspace[1];}
-					$x = round((154-($x/100)));
-					$y = round(($y/100));
-					$dead = ($row['death'] ? '_dead' : '');
-					$inventory = substr($row['inventory'], 0, 40)."...";
-					$backpack = substr($row['backpack'], 0, 40)."...";
-					$name = "<a href=\"index.php?view=info&show=1&id=".$row['uid']."&cid=".$row['id']."\">".$players[$i][4]."</a>";
-					$uid = "<a href=\"index.php?view=info&show=1&id=".$row['uid']."&cid=".$row['id']."\">".$row["uid"]."</a>";
-					
+				while ($row=mysql_fetch_array($res)) {					
+					$tablerows .= row_online_player($row, $players[$i], $path);
 				}
-				$icon = '<a href="index.php?view=actions&kick='.$players[$i][0].'"><img src="'.$path.'images/icons/player'.$dead.'.png" title="Kick '.$players[$i][4].'" alt="Kick '.$players[$i][4].'"/></a>';
-					
-				$tablerows .= "<tr>
-				<td align=\"center\"  style=\"vertical-align:middle;\">".$icon."</td>
-				<td align=\"center\"  style=\"vertical-align:middle;\">".$name."</td>
-				<td align=\"center\">".$uid."</td>
-				<td align=\"center\">".$ip."</td>
-				<td align=\"center\">".$ping."</td>
-				<td align=\"center\">left:".$y." top:".$x."</td>
-				<td align=\"center\">".$inventory."</td>
-				<td align=\"center\">".$backpack."</td>
-				<tr>";
 			}
 		}
 	}

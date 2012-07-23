@@ -1,6 +1,6 @@
 <?
 if (isset($_SESSION['user_id']))
-{
+{	
 	$pnumber = 0;
 	$tableheader = '';
 	$tablerows = '';

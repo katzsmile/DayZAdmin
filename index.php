@@ -23,6 +23,7 @@ if (isset($_GET['logout']))
 if (isset($_SESSION['user_id']))
 {
 	include ('modules/rcon.php');
+	include ('modules/tables/rows.php');
 	function slashes(&$el)
 	{
 		if (is_array($el))

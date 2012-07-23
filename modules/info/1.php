@@ -81,7 +81,7 @@ while ($row=mysql_fetch_array($res)) {
 ?>	
 	<div id="page-heading">
 		<h1><? echo "<title>".$row['name']." - ".$sitename."</title>"; ?></h1>
-		<h1><? echo $row['name']; ?> - <? echo $row['uid']; ?></h1>
+		<h1><? echo $row['name']; ?> - <? echo $row['uid']; ?> - Last save: <? echo $row['lastupdate']; ?></h1>
 	</div>
 	<!-- end page-heading -->
 

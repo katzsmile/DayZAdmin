@@ -94,36 +94,15 @@
 		$chbox = "<th class=\"table-header-repeat line-left\"><a href=\"\">Delete</a></th>";
 		$formhead = '<form action="index.php?view=table&show=4" method="post">';
 		$formfoot = '<input type="submit" class="submit-login"  /></form>';
-	} 
+	}
 	
-	$tableheader = '
-		<tr>'.$chbox.'
-		<th class="table-header-repeat line-left"><a href="">ID</a></th>
-		<th class="table-header-repeat line-left minwidth-1"><a href="">Classname</a>	</th>
-		<th class="table-header-repeat line-left minwidth-1"><a href="">Object UID</a></th>
-		<th class="table-header-repeat line-left"><a href="">Damage</a></th>
-		<th class="table-header-repeat line-left"><a href="">Position</a></th>
-		<th class="table-header-repeat line-left"><a href="">Inventory</a></th>
-		<th class="table-header-repeat line-left"><a href="">Hitpoints</a></th>
-		</tr>';
-		
+	$tableheader = header_vehicle(0, $chbox);
+	
+	if (!$serverrunning){ 
+		$chbox = "<td class=\"gear_preview\"><input name=\"vehicle[]\" value=\"".$row['id']."\" type=\"checkbox\"/></td>";
+	}	
 	while ($row=mysql_fetch_array($res)) {
-		$Worldspace = str_replace("[", "", $row['pos']);
-		$Worldspace = str_replace("]", "", $Worldspace);
-		$Worldspace = str_replace("|", ",", $Worldspace);
-		$Worldspace = explode(",", $Worldspace);
-		if (!$serverrunning){ 
-			$chbox = "<td><input name=\"vehicle[]\" value=\"".$row['id']."\" type=\"checkbox\"/></td>";
-		}
-		$tablerows .= "<tr>".$chbox."
-			<td><a href=\"index.php?view=info&show=4&id=".$row['id']."\">".$row['id']."</a></td>
-			<td><a href=\"index.php?view=info&show=4&id=".$row['id']."\">".$row['otype']."</a></td>			
-			<td><a href=\"index.php?view=info&show=4&id=".$row['id']."\">".$row['uid']."</a></td>
-			<td>".$row['damage']."</td>
-			<td>top:".round((154-($Worldspace[2]/100)))." left:".round(($Worldspace[1]/100))."</td>
-			<td>".substr($row['inventory'], 0, 40) . "...</td>
-			<td>".substr($row['health'], 0, 40) . "...</td>
-		</tr>";
-		}
+		$tablerows .= row_vehicle($row, $chbox);
+	}
 	include ('paging.php');
 ?>
