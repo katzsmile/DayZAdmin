@@ -117,7 +117,7 @@ function print_table($data) {
 						<?php foreach ($quicklinks['quicklinks'] as $ql) : ?>
 							<?php if ($ql != null) : ?>
 							<li>
-								<a href="<?php echo $ql['Link']; ?>">
+								<a href="<?php echo $ql['Link']; ?>" style="color: #000;">
 									<span class="quicklink-box">
 										<img src="<?echo $path;?>images/icons/<?php echo $ql['Icon']; ?>" alt="<?php echo $ql['Name']; ?>" /><br />
 										<strong><?php echo $ql['Name']; ?></strong>
