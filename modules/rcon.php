@@ -52,7 +52,7 @@ function dec_to_hex($dec)
 function get_checksum($cs)
 {
     $var = computeUnsignedCRC32($cs);
-
+	//echo "crchex: ".$var."<br/>";
 	$x = ('0x');
 	$a = substr($var, 0, 2);
 	$a = $x.$a;
@@ -84,7 +84,7 @@ function rcon($serverip,$serverport,$rconpassword,$cmd){
 		$res = fread($rcon, 16);
 		
 		$cmdhead = chr(0xFF).chr(0x01).chr(0x00);
-
+		//$cmd = "Players";
 		$cmd = $cmdhead.$cmd;
 		$checksum = get_checksum($cmd);
 		$cmdmsg = $head.$checksum.$cmd;
@@ -95,12 +95,14 @@ function rcon($serverip,$serverport,$rconpassword,$cmd){
 		
 		if ( strToHex(substr($answer, 9, 1)) == "0"){
 			$count = strToHex(substr($answer, 10, 1));
-
+			//echo $count."<br/>";
 			for ($i = 0; $i < $count-1; $i++){
 				$answer .= fread($rcon, 102400);
 			}
 		}
-
+		//echo strToHex(substr($answer, 0, 16))."<br/>";
+		//echo strToHex($answer)."<br/>";
+		//echo $answer."<br/>";
 		$cmd = "Exit";
 		$cmd = $cmdhead.$cmd;
 		$checksum = get_checksum($cmd);

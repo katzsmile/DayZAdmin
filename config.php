@@ -1,5 +1,6 @@
 <?php
 	defined('DS') ? null : define('DS',DIRECTORY_SEPARATOR);
+	$path = "/"; //path to the files, ex. "/admin/"
 	$hostname = "127.0.0.1";  //Database host
 	$serverip = "127.0.0.1";  //game-server host
 	$rconpassword = "123456"; //rcon password

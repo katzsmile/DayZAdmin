@@ -46,7 +46,7 @@
 		if(array_key_exists(2,$Worldspace)){$x = $Worldspace[2];}
 		if(array_key_exists(1,$Worldspace)){$y = $Worldspace[1];}
 		
-		$icon = '<img src="/images/icons/player'.($row['death'] ? '_dead' : '').'.png" title="" alt=""/>';
+		$icon = '<img src="'.$path.'images/icons/player'.($row['death'] ? '_dead' : '').'.png" title="" alt=""/>';
 		
 		$tablerows .= "<tr>
 			<td align=\"center\">".$icon."</td>

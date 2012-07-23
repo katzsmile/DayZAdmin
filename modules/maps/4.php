@@ -19,10 +19,10 @@
 	$result = mysql_query($query) or die(mysql_error());
 	$class = mysql_fetch_assoc($result);		
 
-	$description = "<h2><a href=\"index.php?view=info&show=4&id=".$row['id']."\">".$row['otype']."</a></h2><table><tr><td><img style=\"max-width: 100px;\" src=\"/images/vehicles/".$row['otype'].".png\"></td><td>&nbsp;</td><td style=\"vertical-align:top; \"><h2>Position:</h2>left:".round(($y/100))." top:".round(((15360-$x)/100))."</td></tr></table>";
-	$markers .= "['".$row['otype']."', '".$description."',".$y.", ".($x+1024).", ".$k++.", '/images/icons/".$class['Type'].".png'],";
+	$description = "<h2><a href=\"index.php?view=info&show=4&id=".$row['id']."\">".$row['otype']."</a></h2><table><tr><td><img style=\"max-width: 100px;\" src=\"".$path."images/vehicles/".$row['otype'].".png\"></td><td>&nbsp;</td><td style=\"vertical-align:top; \"><h2>Position:</h2>left:".round(($y/100))." top:".round(((15360-$x)/100))."</td></tr></table>";
+	$markers .= "['".$row['otype']."', '".$description."',".$y.", ".($x+1024).", ".$k++.", '".$path."images/icons/".$class['Type'].".png'],";
 	};
 	
-	$markers .= "['Edge of map', 'Edge of Chernarus', 0.0, 0.0, 1, '/images/thumbs/null.png']];";
+	$markers .= "['Edge of map', 'Edge of Chernarus', 0.0, 0.0, 1, '".$path."images/thumbs/null.png']];";
 	include ('modules/gm.php');
 ?>

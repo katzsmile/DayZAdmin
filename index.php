@@ -71,6 +71,6 @@ if (isset($_SESSION['user_id']))
 }
 else
 {
-	include ('modules/login.php');
+	include ($path.'modules/login.php');
 }
 ?>

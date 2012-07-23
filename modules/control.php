@@ -9,7 +9,6 @@ $pagetitle = "Server control";
 	echo "<title>".$pagetitle." - ".$sitename."</title>";
 	echo "<h1>".$pagetitle."</h1>";
 	$commandString = "start \"\" /d \"".$gamepath."\" /b ".'"'.$exepath.'"'.$serverstring; 
-	//echo $commandString;
 	
 	$serverrunning = false;
 	
@@ -18,11 +17,10 @@ $pagetitle = "Server control";
 			case 0:
 				
 				pclose(popen($commandString, 'r'));
-				//$output = exec('"'.$exepath.'"'.$serverstring);
 				$query = "INSERT INTO `logs`(`action`, `user`, `timestamp`) VALUES ('START SERVER','{$_SESSION['login']}',NOW())";
 				$sql2 = mysql_query($query) or die(mysql_error());
 				sleep(10);
-				//header('Location: index.php?view=control');				
+		
 				break;
 			case 1:
 				$exestatus = exec('tasklist /FI "IMAGENAME eq '.$gameexe.'" /FO CSV');
@@ -34,10 +32,9 @@ $pagetitle = "Server control";
 					$output = exec('taskkill /IM '.$exestatus);
 					$query = "INSERT INTO `logs`(`action`, `user`, `timestamp`) VALUES ('STOP SERVER','{$_SESSION['login']}',NOW())";
 					$sql2 = mysql_query($query) or die(mysql_error());
-					//echo $output.'!!';
 				}
 				sleep(10);
-				//header('Location: index.php?view=control');
+
 				break;
 			default:
 				$exestatus = exec('tasklist /FI "IMAGENAME eq '.$gameexe.'" /FO CSV');
@@ -49,10 +46,10 @@ $pagetitle = "Server control";
 					$output = exec('taskkill /IM '.$exestatus);
 					$query = "INSERT INTO `logs`(`action`, `user`, `timestamp`) VALUES ('STOP SERVER','{$_SESSION['login']}',NOW())";
 					$sql2 = mysql_query($query) or die(mysql_error());
-					//echo $output.'!!';
+
 				}
 				sleep(10);
-				//header('Location: index.php?view=control');
+
 		}
 	}
 	
@@ -65,9 +62,6 @@ $pagetitle = "Server control";
 	
 	if ($exestatus == strtolower($gameexe)){
 		$serverrunning = true;
-		//echo $taskkill.'<br/>';
-		//$output = exec('taskkill /IM '.$taskkill);
-		//echo $output.'!!';
 	} else {
 		$serverrunning = false;
 	}
@@ -75,11 +69,11 @@ $pagetitle = "Server control";
 </div>
 <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 	<tr>
-		<th rowspan="3" class="sized"><img src="images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
+		<th rowspan="3" class="sized"><img src="<?echo $path;?>images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
 		<th class="topleft"></th>
 		<td id="tbl-border-top">&nbsp;</td>
 		<th class="topright"></th>
-		<th rowspan="3" class="sized"><img src="images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
+		<th rowspan="3" class="sized"><img src="<?echo $path;?>images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
 	</tr>
 	<tr>
 		<td id="tbl-border-left"></td>
@@ -97,17 +91,17 @@ $pagetitle = "Server control";
 				<table border="0" width="100%" cellpadding="0" cellspacing="0">
 				<tr>
 					<td class="green-left">Server is running.</td>
-					<td class="green-right"><a class="close-green"><img src="images/table/icon_close_green.gif"   alt="" /></a></td>
+					<td class="green-right"><a class="close-green"><img src="<?echo $path;?>images/table/icon_close_green.gif"   alt="" /></a></td>
 				</tr>
 				</table>
 				</div>
 				<!--  end message-green -->
 				<!--  start step-holder -->
 				<div id="step-holder">	
-					<div class="step-no-off"><img src="images/start.png"/></div>
+					<div class="step-no-off"><img src="<?echo $path;?>images/start.png"/></div>
 					<div class="step-light-left">Start server</div>
 					<div class="step-light-right">&nbsp;</div>
-					<div class="step-no"><a href="index.php?view=control&action=1"><img src="images/stop.png"/></a></div>
+					<div class="step-no"><a href="index.php?view=control&action=1"><img src="<?echo $path;?>images/stop.png"/></a></div>
 					<div class="step-dark-left"><a href="index.php?view=control&action=1">Stop server</a></div>
 					<div class="step-dark-round">&nbsp;</div>
 					<div class="clear"></div>
@@ -121,17 +115,17 @@ $pagetitle = "Server control";
 				<table border="0" width="100%" cellpadding="0" cellspacing="0">
 				<tr>
 					<td class="red-left">Server is stopped.</td>
-					<td class="red-right"><a class="close-red"><img src="images/table/icon_close_red.gif"   alt="" /></a></td>
+					<td class="red-right"><a class="close-red"><img src="<?echo $path;?>images/table/icon_close_red.gif"   alt="" /></a></td>
 				</tr>
 				</table>
 				</div>
 				<!--  end message-red -->
 				<!--  start step-holder -->
 				<div id="step-holder">	
-					<div class="step-no"><a href="index.php?view=control&action=0"><img src="images/start.png"/></a></div>
+					<div class="step-no"><a href="index.php?view=control&action=0"><img src="<?echo $path;?>images/start.png"/></a></div>
 					<div class="step-dark-left"><a href="index.php?view=control&action=0">Start server</a></div>
 					<div class="step-dark-right">&nbsp;</div>
-					<div class="step-no-off"><img src="images/stop.png"/></div>
+					<div class="step-no-off"><img src="<?echo $path;?>images/stop.png"/></div>
 					<div class="step-light-left">Stop server</div>
 					<div class="step-light-round">&nbsp;</div>
 					<div class="clear"></div>
@@ -151,7 +145,7 @@ $pagetitle = "Server control";
 				}
 
 				//echo $configarray['hostname'];
-			?>
+			?><!-- 
 				<form action="index.php?view=control" method="post">
 					<table id="id-form" border="0" cellpadding="0" cellspacing="0">
 					<tr><th><h1>Parameter</h1></th><th><h1>Value</h1></th></tr>
@@ -226,7 +220,7 @@ difficulty = "Recruit";</textarea></td>
 					</td>
 					</tr>
 					</table>
-				</form>
+				</form>-->
 			</div>
 			<!--  end content-table  -->					
 			

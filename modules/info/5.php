@@ -15,11 +15,11 @@ while ($row=mysql_fetch_array($res)) {
 
 	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 	<tr>
-		<th rowspan="3" class="sized"><img src="images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
+		<th rowspan="3" class="sized"><img src="<? echo $path; ?>images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
 		<th class="topleft"></th>
 		<td id="tbl-border-top">&nbsp;</td>
 		<th class="topright"></th>
-		<th rowspan="3" class="sized"><img src="images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
+		<th rowspan="3" class="sized"><img src="<? echo $path; ?>images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
 	</tr>
 	<tr>
 		<td id="tbl-border-left"></td>
@@ -36,7 +36,7 @@ while ($row=mysql_fetch_array($res)) {
 				<th class="table-header-repeat line-left minwidth-1"><a href="">Info</a></th>
 			</tr>
 			<tr>
-				<td align="center"><img src='/images/vehicles/<? echo $row['otype']; ?>.png'></td>
+				<td align="center"><img src='<? echo $path; ?>images/vehicles/<? echo $row['otype']; ?>.png'></td>
 				<td>
 					<h2>Position:</h2><h3><? echo "left:".round(($Worldspace[1]/100))." top:".round((154-($Worldspace[2]/100))); ?></h3>
 				</td>	

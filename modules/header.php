@@ -49,7 +49,7 @@ $(function() {
 
 	<!-- start logo -->
 	<div id="logo">
-		<a href=""><img src="images/logo.png" width="150px" height="72px" alt="" /></a>
+		<a href=""><img src="<?echo $path;?>images/logo.png" width="150px" height="72px" alt="" /></a>
 	</div>
 	<!-- end logo -->
 	

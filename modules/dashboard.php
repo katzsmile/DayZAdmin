@@ -16,13 +16,13 @@ while ($row=mysql_fetch_array($res)) {
 }
 $xml = file_get_contents('/quicklinks.xml', true);
 
-require_once('/modules/xml2array.php');
+require_once('xml2array.php');
 $quicklinks = XML2Array::createArray($xml);
 
 // Define your servers,
 // see list.php for all supported games and identifiers.
 $servers = array(
-    'server 1' => array('armedassault2', $serverip)
+    'server 1' => array('armedassault2', '79.174.32.203')
 );
 
 
@@ -80,11 +80,11 @@ function print_table($data) {
 </div>
 <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 	<tr>
-		<th rowspan="3" class="sized"><img src="images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
+		<th rowspan="3" class="sized"><img src="<?echo $path;?>images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
 		<th class="topleft"></th>
 		<td id="tbl-border-top">&nbsp;</td>
 		<th class="topright"></th>
-		<th rowspan="3" class="sized"><img src="images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
+		<th rowspan="3" class="sized"><img src="<?echo $path;?>images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
 	</tr>
 	<tr>
 		<td id="tbl-border-left"></td>
@@ -119,7 +119,7 @@ function print_table($data) {
 							<li>
 								<a href="<?php echo $ql['Link']; ?>">
 									<span class="quicklink-box">
-										<img src="/images/icons/<?php echo $ql['Icon']; ?>" alt="<?php echo $ql['Name']; ?>" /><br />
+										<img src="<?echo $path;?>images/icons/<?php echo $ql['Icon']; ?>" alt="<?php echo $ql['Name']; ?>" /><br />
 										<strong><?php echo $ql['Name']; ?></strong>
 									</span>
 								</a>

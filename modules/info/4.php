@@ -18,6 +18,21 @@ while ($row=mysql_fetch_array($res)) {
 	$Backpack = str_replace("|", ",", $Backpack);
 	//$Backpack  = str_replace('"', "", $Backpack );
 	$Backpack  = json_decode($Backpack);
+
+	
+	
+	$owner = "";
+	$ownerid = "";
+	$owneruid = "";
+	if ($row['oid'] != "0"){
+		$query = "SELECT * FROM main WHERE id = ".$row['oid']." LIMIT 1"; 
+		$res2	= mysql_query($query) or die(mysql_error());
+		while ($row2=mysql_fetch_array($res2)) {
+			$owner = $row2['name'];
+			$ownerid = $row2['id'];
+			$owneruid = $row2['uid'];
+		}
+	}
 	
 	$Hitpoints  = $row['health'];
 	//$Hitpoints  ='[["wheel_1_1_steering",0.2],["wheel_2_1_steering",0],["wheel_1_4_steering",1],["wheel_2_4_steering",1],["wheel_1_3_steering",1],["wheel_2_3_steering",1],["wheel_1_2_steering",0],["wheel_2_2_steering",1],["motor",0.1],["karoserie",0.4]]';
@@ -41,11 +56,11 @@ while ($row=mysql_fetch_array($res)) {
 
 	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 	<tr>
-		<th rowspan="3" class="sized"><img src="images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
+		<th rowspan="3" class="sized"><img src="<? echo $path; ?>images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
 		<th class="topleft"></th>
 		<td id="tbl-border-top">&nbsp;</td>
 		<th class="topright"></th>
-		<th rowspan="3" class="sized"><img src="images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
+		<th rowspan="3" class="sized"><img src="<? echo $path; ?>images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
 	</tr>
 	<tr>
 		<td id="tbl-border-left"></td>
@@ -57,7 +72,7 @@ while ($row=mysql_fetch_array($res)) {
 			<div id="table-content">
 				<div id="gear_vehicle">
 					<div class="gear_info">
-						<img class="playermodel" src='/images/vehicles/<? echo $row['otype']; ?>.png'/>
+						<img class="playermodel" src='<? echo $path; ?>images/vehicles/<? echo $row['otype']; ?>.png'/>
 						<div id="gps" style="margin-left:46px;margin-top:54px">
 							<div class="gpstext" style="font-size: 22px;width:60px;text-align: left;margin-left:47px;margin-top:13px">
 							<?
@@ -75,6 +90,11 @@ while ($row=mysql_fetch_array($res)) {
 							?>
 							</div>							
 						</div>
+						<? if($row['oid'] != "0"){?>
+						<div class="statstext" style="width:180px;margin-left:205px;margin-top:-115px">
+							<?echo 'Owner:&nbsp;<a href="index.php?view=info&show=1&id='.$owneruid.'&cid='.$ownerid.'">'.$owner.'</a>';?>
+						</div>
+						<?} ?>
 						<div class="statstext" style="width:180px;margin-left:205px;margin-top:-95px">
 							<?echo 'Damage:&nbsp;'.$row['damage'];?>
 						</div>
@@ -89,9 +109,13 @@ while ($row=mysql_fetch_array($res)) {
 					<div class="vehicle_gear">	
 						<div id="vehicle_inventory">	
 						<?
+							
 							$maxmagazines = 24;
 							$maxweaps = 3;
 							$maxbacks = 0;
+							$freeslots = 0;
+							$freeweaps = 0;
+							$freebacks = 0;
 							$BackpackName = $row['otype'];
 							if(array_key_exists('s'.$row['otype'],$vehicles_xml['vehicles'])){
 								$maxmagazines = $vehicles_xml['vehicles']['s'.$row['otype']]['transportmaxmagazines'];
@@ -99,7 +123,7 @@ while ($row=mysql_fetch_array($res)) {
 								$maxbacks = $vehicles_xml['vehicles']['s'.$row['otype']]['transportmaxbackpacks'];
 								$BackpackName = $vehicles_xml['vehicles']['s'.$row['otype']]['Name'];
 							}
-							
+							if (count($Backpack) >0){
 							$bpweaponscount = count($Backpack[0][0]);
 							$bpweapons = array();
 							for ($m=0; $m<$bpweaponscount; $m++){
@@ -134,26 +158,26 @@ while ($row=mysql_fetch_array($res)) {
 								if(array_key_exists('s'.$Backpack[$i],$items_xml['items'])){
 									switch($items_xml['items']['s'.$Backpack[$i]]['Type']){
 										case 'binocular':
-											$backpackitem[] = array('image' => '<img style="max-width:43px;max-height:43px;" src="/images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
+											$backpackitem[] = array('image' => '<img style="max-width:43px;max-height:43px;" src="'.$path.'images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
 											break;
 										case 'rifle':
-											$bpweapons[] = array('image' => '<img style="max-width:84px;max-height:84px;" src="/images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
+											$bpweapons[] = array('image' => '<img style="max-width:84px;max-height:84px;" src="'.$path.'images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
 											break;
 										case 'pistol':
-											$bpweapons[] = array('image' => '<img style="max-width:84px;max-height:84px;" src="/images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
+											$bpweapons[] = array('image' => '<img style="max-width:84px;max-height:84px;" src="'.$path.'images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
 											break;
 										case 'backpack':
-											$bpweapons[] = array('image' => '<img style="max-width:84px;max-height:84px;" src="/images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
+											$bpweapons[] = array('image' => '<img style="max-width:84px;max-height:84px;" src="'.$path.'images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
 											$freebacks = $freebacks - 1;
 											break;
 										case 'heavyammo':
-											$backpackitem[] = array('image' => '<img style="max-width:43px;max-height:43px;" src="/images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
+											$backpackitem[] = array('image' => '<img style="max-width:43px;max-height:43px;" src="'.$path.'images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
 											break;
 										case 'smallammo':
-											$backpackitem[] = array('image' => '<img style="max-width:43px;max-height:43px;" src="/images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
+											$backpackitem[] = array('image' => '<img style="max-width:43px;max-height:43px;" src="'.$path.'images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
 											break;
 										case 'item':
-											$backpackitem[] = array('image' => '<img style="max-width:43px;max-height:43px;" src="/images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
+											$backpackitem[] = array('image' => '<img style="max-width:43px;max-height:43px;" src="'.$path.'images/thumbs/'.$Backpack[$i].'.png" title="'.$Backpack[$i].'" alt="'.$Backpack[$i].'"/>', 'slots' => $items_xml['items']['s'.$Backpack[$i]]['Slots']);
 											break;
 										default:
 											$s = '';
@@ -208,6 +232,7 @@ while ($row=mysql_fetch_array($res)) {
 								}								
 								$jk++;
 							}	
+							}
 							//$freeslots = $freeslots - $magazines;							
 						?>
 						</div>
@@ -228,7 +253,7 @@ while ($row=mysql_fetch_array($res)) {
 							$jl = 0;
 							for ($i=0; $i<count($Hitpoints); $i++){
 								if ($jk > 3){ $jk = 0;$jl++;}
-								$hit = '<img style="max-width:90px;max-height:90px;" src="/images/hits/'.$Hitpoints[$i][0].'.png" title="'.$Hitpoints[$i][0].' - '.round(100 - ($Hitpoints[$i][1]*100)).'%" alt="'.$Hitpoints[$i][0].' - '.round(100 - ($Hitpoints[$i][1]*100)).'%"/>';
+								$hit = '<img style="max-width:90px;max-height:90px;" src="'.$path.'images/hits/'.$Hitpoints[$i][0].'.png" title="'.$Hitpoints[$i][0].' - '.round(100 - ($Hitpoints[$i][1]*100)).'%" alt="'.$Hitpoints[$i][0].' - '.round(100 - ($Hitpoints[$i][1]*100)).'%"/>';
 								//$hit = $Hitpoints[$i][0].' - '.$Hitpoints[$i][1];
 								echo '<div class="hit_slot" style="margin-left:'.($jx+(93*$jk)).'px;margin-top:'.($jy+(93*$jl)).'px;width:91px;height:91px;background-color: rgba(100,'.round((255/100)*(100 - ($Hitpoints[$i][1]*100))).',0,0.8);">'.$hit.'</div>';
 								$jk++;

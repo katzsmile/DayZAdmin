@@ -111,7 +111,7 @@
 					$uid = "<a href=\"index.php?view=info&show=1&id=".$row['uid']."&cid=".$row['id']."\">".$row["uid"]."</a>";
 					
 				}
-				$icon = '<a href="index.php?view=actions&kick='.$players[$i][0].'"><img src="/images/icons/player'.$dead.'.png" title="Kick '.$players[$i][4].'" alt="Kick '.$players[$i][4].'"/></a>';
+				$icon = '<a href="index.php?view=actions&kick='.$players[$i][0].'"><img src="'.$path.'images/icons/player'.$dead.'.png" title="Kick '.$players[$i][4].'" alt="Kick '.$players[$i][4].'"/></a>';
 					
 				$tablerows .= "<tr>
 				<td align=\"center\"  style=\"vertical-align:middle;\">".$icon."</td>
