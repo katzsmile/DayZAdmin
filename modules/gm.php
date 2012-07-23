@@ -22,7 +22,7 @@ if (isset($_SESSION['user_id']))
 		  }
 	  
         var Demo = Demo || {};
-        Demo.ImagesBaseUrl = '../tiles/';
+        Demo.ImagesBaseUrl = '<? echo $path; ?>tiles/';
 		var infowindow = null;
 		var marker = null;
 
