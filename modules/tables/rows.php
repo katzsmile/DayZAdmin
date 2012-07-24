@@ -119,8 +119,6 @@ function row_online_player($row, $player, $path){
 	$Worldspace = explode("|", $Worldspace);					
 	if(array_key_exists(2,$Worldspace)){$x = $Worldspace[2];}
 	if(array_key_exists(1,$Worldspace)){$y = $Worldspace[1];}
-	$x = round((154-($x/100)));
-	$y = round(($y/100));
 	$dead = ($row['death'] ? '_dead' : '');
 	$Inventory = $row['inventory'];
 	$Inventory = str_replace("|", ",", $Inventory);
@@ -209,10 +207,13 @@ function row_online_player($row, $player, $path){
 }
 
 function row_vehicle($row, $chbox){
+	$x = 0;
+	$y = 0;
 	$Worldspace = str_replace("[", "", $row['pos']);
 	$Worldspace = str_replace("]", "", $Worldspace);
-	$Worldspace = str_replace("|", ",", $Worldspace);
-	$Worldspace = explode(",", $Worldspace);
+	$Worldspace = explode("|", $Worldspace);					
+	if(array_key_exists(2,$Worldspace)){$x = $Worldspace[2];}
+	if(array_key_exists(1,$Worldspace)){$y = $Worldspace[1];}
 	$Inventory  = $row['inventory'];
 	$Inventory = str_replace("|", ",", $Inventory);
 	$Inventory  = json_decode($Inventory);
