@@ -98,10 +98,11 @@
 	
 	$tableheader = header_vehicle(0, $chbox);
 	
-	if (!$serverrunning){ 
-		$chbox = "<td class=\"gear_preview\"><input name=\"vehicle[]\" value=\"".$row['id']."\" type=\"checkbox\"/></td>";
-	}	
+	
 	while ($row=mysql_fetch_array($res)) {
+		if (!$serverrunning){ 
+			$chbox = "<td class=\"gear_preview\"><input name=\"vehicle[]\" value=\"".$row['id']."\" type=\"checkbox\"/></td>";
+		}	
 		$tablerows .= row_vehicle($row, $chbox);
 	}
 	include ('paging.php');
