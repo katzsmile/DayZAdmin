@@ -11,6 +11,7 @@ while ($row=mysql_fetch_array($res)) {
 	
 	$Worldspace = str_replace("[", "", $row['pos']);
 	$Worldspace = str_replace("]", "", $Worldspace);
+	$Worldspace = str_replace(",", "|", $Worldspace);
 	$Worldspace = explode("|", $Worldspace);
 	$Inventory = $row['inventory'];
 	$Inventory = str_replace("|", ",", $Inventory);
