@@ -82,6 +82,8 @@ if (!empty($_POST))
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Login - DayZ Administration</title>
 <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" title="default" />
+<script language="javascript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>	
+<script src="js/flexcroll.js" type="text/javascript"></script>
 <script src="js/jquery/jquery.pngFix.pack.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
