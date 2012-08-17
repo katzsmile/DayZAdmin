@@ -4,7 +4,7 @@ if (isset($_SESSION['user_id']))
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html;" />
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" title="default" />
 <link rel="stylesheet" href="css/menu.css" />	
 <link rel="stylesheet" href="css/watch.css" />	
